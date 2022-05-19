@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ImageUploadByAndroidWorkManager</string>
+    <string name="uploading">Uploading...</string>
+    <string name="upload_started">Upload started</string>
+    <string name="upload_completed">Upload completed</string>
+    <string name="upload_failed">Upload failed</string>
 </resources>
