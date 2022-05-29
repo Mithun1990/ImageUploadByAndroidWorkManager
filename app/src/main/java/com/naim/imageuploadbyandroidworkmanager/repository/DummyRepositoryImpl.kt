@@ -7,6 +7,6 @@ import javax.inject.Inject
 class DummyRepositoryImpl @Inject constructor() : DummyRepository {
     override suspend fun dummyFileUpload(): ApiResponse {
         delay(5000)
-        return ApiResponse.Error
+        return ApiResponse.Success
     }
 }

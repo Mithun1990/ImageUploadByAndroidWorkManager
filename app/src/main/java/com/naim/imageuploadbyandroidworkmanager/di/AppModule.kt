@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.naim.imageuploadbyandroidworkmanager.repository.DummyRepository
 import com.naim.imageuploadbyandroidworkmanager.repository.DummyRepositoryImpl
 import com.naim.imageuploadbyandroidworkmanager.workers.factory.ImageUploadWorkerFactory
+import com.naim.imageuploadbyandroidworkmanager.workers.factory.PeriodicImageUploadWorkerFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,6 +28,10 @@ object AppModule {
     @Provides
     fun provideImageUploadWorkerFactory(gson: Gson, dummyRepository: DummyRepository) =
         ImageUploadWorkerFactory(gson, dummyRepository)
+
+    @Provides
+    fun providePeriodicImageUploadWorkerFactory(gson: Gson) =
+        PeriodicImageUploadWorkerFactory(gson)
 
     @Provides
     fun provideWorkManager(@ApplicationContext context: Context): WorkManager =

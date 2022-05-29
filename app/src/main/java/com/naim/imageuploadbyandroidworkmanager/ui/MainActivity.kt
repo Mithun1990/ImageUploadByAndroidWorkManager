@@ -1,12 +1,9 @@
 package com.naim.imageuploadbyandroidworkmanager.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.work.Configuration
-import androidx.work.WorkManager
-import com.naim.imageuploadbyandroidworkmanager.R
+import com.naim.imageuploadbyandroidworkmanager.databinding.ActivityMainBinding
 import com.naim.imageuploadbyandroidworkmanager.viewmodel.ImageUploadViewModel
 import com.naim.imageuploadbyandroidworkmanager.workers.factory.ImageUploadWorkerFactory
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,20 +12,26 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val viewModel: ImageUploadViewModel by viewModels()
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
 
     @Inject
     lateinit var imageUploadWorkerFactory: ImageUploadWorkerFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        configureWorkManager()
-        viewModel.uploadImage()
-    }
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-    private fun configureWorkManager() {
-        val configuration = Configuration.Builder().setWorkerFactory(imageUploadWorkerFactory)
-            .setMinimumLoggingLevel(Log.VERBOSE).build()
-        WorkManager.initialize(this, configuration)
-    }
+        binding.button.setOnClickListener {
+            viewModel.uploadImage()
+        }
 
+        binding.button3.setOnClickListener {
+            viewModel.executePeriodicWorker()
+        }
+
+        binding.button2.setOnClickListener {
+            viewModel.stopPeriodicWorkRequest()
+        }
+    }
 }

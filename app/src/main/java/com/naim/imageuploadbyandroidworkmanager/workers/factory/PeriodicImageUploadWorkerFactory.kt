@@ -5,19 +5,17 @@ import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
 import com.google.gson.Gson
-import com.naim.imageuploadbyandroidworkmanager.repository.DummyRepository
-import com.naim.imageuploadbyandroidworkmanager.workers.ImageUploadWorker
+import com.naim.imageuploadbyandroidworkmanager.workers.PeriodicImageUploadWorker
 
-class ImageUploadWorkerFactory(val gson: Gson, val dummyRepository: DummyRepository) :
-    WorkerFactory() {
+class PeriodicImageUploadWorkerFactory constructor(private val gson: Gson) : WorkerFactory() {
     override fun createWorker(
         appContext: Context,
         workerClassName: String,
         workerParameters: WorkerParameters
     ): ListenableWorker? {
         return when (workerClassName) {
-            ImageUploadWorker::class.java.name -> {
-                ImageUploadWorker(appContext, workerParameters, gson, dummyRepository)
+            PeriodicImageUploadWorker::class.java.name -> {
+                PeriodicImageUploadWorker(appContext, workerParameters, gson)
             }
             else -> {
                 null
